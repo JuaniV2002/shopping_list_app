@@ -28,33 +28,43 @@ class _GroceryListState extends State<GroceryList> {
 
   void _loadItems() async {
     final url = Uri.https('shopping-ist-app-default-rtdb.firebaseio.com', 'shopping_list.json');
-    final response = await http.get(url);
 
-    if (response.statusCode >= 400) {
+    try {
+      final response = await http.get(url);
+
+      if (response.statusCode >= 400) {}
+
+      if (response.body == 'null') {
+        setState(() {
+          _isLoading = false;
+        });
+        return;
+      }
+
+      final Map<String, dynamic> listData = json.decode(response.body);
+      final List<GroceryItem> loadedItems = [];
+      for (final item in listData.entries) {
+        final category = categories.entries
+            .firstWhere((catItem) => catItem.value.title == item.value['category'])
+            .value;
+        loadedItems.add(
+          GroceryItem(
+            id: item.key,
+            name: item.value['name'],
+            quantity: item.value['quantity'],
+            category: category,
+          ),
+        );
+      }
+      setState(() {
+        _groceryItems = loadedItems;
+        _isLoading = false;
+      });
+    } catch (error) {
       setState(() {
         _error = 'An error occurred while loading the data!';
       });
     }
-
-    final Map<String, dynamic> listData = json.decode(response.body);
-    final List<GroceryItem> loadedItems = [];
-    for (final item in listData.entries) {
-      final category = categories.entries
-          .firstWhere((catItem) => catItem.value.title == item.value['category'])
-          .value;
-      loadedItems.add(
-        GroceryItem(
-          id: item.key,
-          name: item.value['name'],
-          quantity: item.value['quantity'],
-          category: category,
-        ),
-      );
-    }
-    setState(() {
-      _groceryItems = loadedItems;
-      _isLoading = false;
-    });
   }
 
   void _addItem() async {
@@ -78,8 +88,9 @@ class _GroceryListState extends State<GroceryList> {
     setState(() {
       _groceryItems.remove(item);
     });
-    
-    final url = Uri.https('shopping-ist-app-default-rtdb.firebaseio.com', 'shopping_list/${item.id}.json');
+
+    final url =
+        Uri.https('shopping-ist-app-default-rtdb.firebaseio.com', 'shopping_list/${item.id}.json');
     final response = await http.delete(url);
 
     if (response.statusCode >= 400) {
