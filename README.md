@@ -1,16 +1,41 @@
-# shopping_list_app
+# Shopping List app
 
-A new Flutter project.
+This app will allow you to create a shopping list with the items you need to buy. You can add items using a form and swipe them away when you have bought them.
 
-## Getting Started
+## Key Features
 
-This project is a starting point for a Flutter application.
+- Add items to the shopping list.
+- Remove items from the shopping list.
 
-A few resources to get you started if this is your first Flutter project:
+## Screenshots
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+<table>
+    <tr>
+        <td>
+            <img src="/assets/empty_list.png" width="300">
+        </td>
+        <td>
+            <img src="/assets/form.png" width="300">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <img src="/assets/dropdown.png" width="300">
+        </td>
+        <td>
+            <img src="/assets/list_items.png" width="300">
+        </td>
+    </tr>
+</table>
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Try my app!
+
+The attached files **DO NOT** work as a standalone project, they are just the code I wrote (lib folder) and pubspecs (dependencies).
+
+To give the app a try:
+-  [Download the Flutter SDK and Android Studio or Xcode](https://docs.flutter.dev/get-started/install).
+-  Start a virtual device in Android Studio or Xcode.
+-  Clone my repository and move to that location in your terminal.
+-  Run `flutter create .` in the terminal. (this will create all the app dependencies).
+-  Run `flutter run`. The virtual device will open the app automatically.
+-  That's it!
